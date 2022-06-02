@@ -5,9 +5,7 @@ const logger = require('../utils/loggers');
 /new
 */
 const createUser = (request = req, response = res) => {
-	logger.info('[authRouter], CREATE');
 	const body = request.body;
-	console.log({ body });
 
 	response.status(200).json({ message: 'create!' });
 };
