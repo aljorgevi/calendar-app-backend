@@ -22,9 +22,7 @@ const errorHandler = (error, request, response, next) => {
 		return response.status(400).send({ error: 'malformatted id' });
 	} else if (error.name === 'ValidationError') {
 		logger.info('[error] - ValidationError: ', error.message);
-		return response
-			.status(400)
-			.json({ error: error._message ? error._message : error.message });
+		return response.status(400).json({ error: error.message });
 	} else if (error.name === 'JsonWebTokenError') {
 		logger.info('[error] - JsonWebTokenError: ', error.message);
 		return response.status(401).json({ error: 'invalid token' });
