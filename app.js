@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const logger = require('./utils/loggers');
-const authRouter = require('./routes/controllers/auth');
+const authRouter = require('./routes/auth');
 
 logger.info('connecting to...');
 
