@@ -3,8 +3,8 @@ const express = require('express');
 require('express-async-errors');
 const app = express();
 const cors = require('cors');
-const authRouter = require('./routes/auth');
-const middleware = require('./utils/middleware');
+const authRouter = require('./routes/users');
+const middleware = require('./utils/middlewares');
 const logger = require('./utils/loggers');
 const mongoose = require('mongoose');
 
@@ -28,7 +28,7 @@ app.use(cors());
 app.use(express.json());
 app.use(middleware.requestLogger);
 
-app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/users', authRouter);
 
 // last two middlewares are for error handling
 app.use(middleware.unknownEndpoint);
