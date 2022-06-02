@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const logger = require('./loggers');
 
 const requestLogger = (request, response, next) => {
@@ -30,8 +31,20 @@ const errorHandler = (error, request, response, next) => {
 	next(error);
 };
 
+const validatorHandler = (request, response, next) => {
+	const errors = validationResult(request);
+	if (!errors.isEmpty()) {
+		return response.status(400).json({
+			error: errors.mapped()
+		});
+	}
+
+	next();
+};
+
 module.exports = {
 	requestLogger,
 	unknownEndpoint,
-	errorHandler
+	errorHandler,
+	validatorHandler
 };

@@ -1,5 +1,6 @@
 const authRouter = require('express').Router();
 const { check } = require('express-validator');
+const { validatorHandler } = require('../utils/middleware');
 const { createUser, login, renew } = require('../controllers/auth');
 
 /*
@@ -10,7 +11,8 @@ authRouter.post(
 	'/',
 	[
 		check('email', 'email is required').isEmail(),
-		check('password', 'password is required').isLength({ min: 6 })
+		check('password', 'password is required').isLength({ min: 6 }),
+		validatorHandler
 	],
 	login
 );
@@ -20,7 +22,8 @@ authRouter.post(
 	[
 		check('name', 'name is required').not().isEmpty(),
 		check('email', 'email is required').isEmail(),
-		check('password', 'password is required').isLength({ min: 6 })
+		check('password', 'password is required').isLength({ min: 6 }),
+		validatorHandler
 	],
 	createUser
 );
