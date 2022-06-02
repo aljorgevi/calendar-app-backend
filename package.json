@@ -13,12 +13,12 @@
 	"author": "Jorge Mena <jormencar@yahoo.com>",
 	"license": "MIT",
 	"dependencies": {
-		"cors": "^2.8.5",
+		"cors": "2.8.5",
 		"dotenv": "16.0.1",
 		"express": "4.18.1",
-		"express-async-errors": "^3.1.1",
-		"express-validator": "^6.14.1",
-		"mongoose": "^6.3.5",
+		"express-async-errors": "3.1.1",
+		"express-validator": "6.14.1",
+		"mongoose": "6.3.5",
 		"mongoose-unique-validator": "^3.1.0"
 	},
 	"devDependencies": {
