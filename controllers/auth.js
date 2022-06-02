@@ -16,12 +16,18 @@ const createUser = (request = req, response = res) => {
 		});
 	}
 
-	response.status(201).json({ message: 'success!', user: body });
+	response.status(201).json({ message: 'succeed!', user: body });
 };
 
 const login = (request, response = res) => {
-	logger.info('[authRouter], LOGIN');
-	response.status(200).json({ message: 'login!' });
+	const errors = validationResult(request);
+	if (!errors.isEmpty()) {
+		return response.status(400).json({
+			error: errors.mapped()
+		});
+	}
+
+	response.status(200).json({ message: 'succeed!' });
 };
 
 const renew = (request, response = res) => {
