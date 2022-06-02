@@ -1,4 +1,5 @@
 const { response: res, request: req } = require('express');
+const { validationResult } = require('express-validator');
 const logger = require('../utils/loggers');
 
 /*
@@ -7,7 +8,15 @@ const logger = require('../utils/loggers');
 const createUser = (request = req, response = res) => {
 	const body = request.body;
 
-	response.status(200).json({ message: 'create!' });
+	// error handling
+	const errors = validationResult(request);
+	if (!errors.isEmpty()) {
+		return response.status(400).json({
+			error: errors.mapped()
+		});
+	}
+
+	response.status(201).json({ message: 'success!', user: body });
 };
 
 const login = (request, response = res) => {
