@@ -1,0 +1,13 @@
+{
+	"name": "backend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "nodemon index.js",
+		"start": "nodemon index.js"
+	},
+	"keywords": [],
+	"author": "Jorge Mena <jormencar@yahoo.com>",
+	"license": "MIT"
+}
