@@ -1,8 +1,13 @@
-const { response: res } = require('express');
+const { response: res, request: req } = require('express');
 const logger = require('../utils/loggers');
 
-const createUser = (request, response = res) => {
+/*
+/new
+*/
+const createUser = (request = req, response = res) => {
 	logger.info('[authRouter], CREATE');
+	const body = request.body;
+	console.log({ body });
 
 	response.status(200).json({ message: 'create!' });
 };

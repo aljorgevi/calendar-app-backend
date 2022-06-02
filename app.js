@@ -5,8 +5,10 @@ const authRouter = require('./routes/auth');
 
 logger.info('connecting to...');
 
-// public
 app.use(express.static('public'));
+
+// read & parse the body of the request
+app.use(express.json());
 
 app.use('/api/v1/auth', authRouter);
 
