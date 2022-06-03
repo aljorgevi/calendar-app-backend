@@ -20,9 +20,8 @@ eventsRouter.post(
 	'/',
 	[
 		check('title', 'title is required').notEmpty().isString(),
-		check('start', 'start date is required and/or valid').custom(isDate),
-		check('end', 'end date is required and/or valid').custom(isDate),
-		// check('user', 'user is required').notEmpty().isObject().custom(isEmpty),
+		check('start', 'start date is required and/or valid').isDate(),
+		check('end', 'end date is required and/or valid').isDate(),
 		validatorHandler
 	],
 	createEvent

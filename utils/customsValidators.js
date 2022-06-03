@@ -10,14 +10,14 @@ const _ = require('lodash');
 // };
 
 const isDate = (value, { request, location, path }) => {
-	console.log({ value, request, location, path });
 	if (!value) {
 		return false;
 	}
 
-	const date = moment(value);
+	const date = moment(value).format('YYYY-MM-DD');
+	console.log({ date });
 	if (date.isValid()) {
-		console.log({ date });
+		console.log('is valid');
 		return true;
 	}
 

@@ -1,8 +1,13 @@
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
 const Event = require('../models/event');
 const User = require('../models/user');
 const { getTokenFrom } = require('../utils/helpers');
 
+/*
+ ** This create a event, getting the ids of the user from the jwt token.
+ ** then, get the user from the DB amd pass the id ref to the event.
+ */
 const createEvent = async (request, response) => {
 	const body = request.body;
 	const token = getTokenFrom(request);
@@ -14,10 +19,13 @@ const createEvent = async (request, response) => {
 
 	const user = await User.findById(decodedToken.id);
 
+	let date = Date.now();
+	let timeNow = moment(new Date(date)).format('YYYY-MM-DD');
+
 	const event = new Event({
 		...body,
-		creationDate: new Date(),
-		asOfTime: new Date(),
+		creationDate: timeNow,
+		asOfTime: timeNow,
 		user: user._id
 	});
 
@@ -40,8 +48,9 @@ const createEvent = async (request, response) => {
 	response.json(savedEvent);
 };
 
-const getEvents = (request, response, next) => {
-	response.send('get events');
+const getEvents = async (request, response, next) => {
+	const events = await Event.find({}).populate('user', 'username');
+	return response.json(events);
 };
 
 const updateEvent = (request, response, next) => {
