@@ -1,5 +1,7 @@
 const eventsRouter = require('express').Router();
-const middleware = require('../utils/middlewares');
+const { check } = require('express-validator');
+const { isDate } = require('../utils/customsValidators');
+const { validateJWT, validatorHandler } = require('../utils/middlewares');
 
 const {
 	createEvent,
@@ -9,12 +11,21 @@ const {
 } = require('../controllers/events');
 
 if (process.env.NODE_ENV === 'production') {
-	eventsRouter.use(middleware.validateJWT);
+	eventsRouter.use(validateJWT);
 }
 
 eventsRouter.get('/', getEvents);
 
-eventsRouter.post('/', createEvent);
+eventsRouter.post(
+	'/',
+	[
+		check('title', 'title is required').notEmpty().isString(),
+		check('start', 'start date is required and/or valid').custom(isDate),
+		check('end', 'end date is required and/or valid').custom(isDate),
+		validatorHandler
+	],
+	createEvent
+);
 
 eventsRouter.put('/:id', updateEvent);
 
