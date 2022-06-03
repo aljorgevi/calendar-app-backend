@@ -5,9 +5,9 @@ const User = require('../models/user');
 const logger = require('../utils/loggers');
 
 /*
-/new
+/new-user
 */
-const createUser = async (request = req, response = res) => {
+const createUser = async (request, response) => {
 	const body = request.body;
 
 	// we add email and username validation to send a meaningful error message, rather that the default sent by express-validator or mongoDB
@@ -39,8 +39,37 @@ const createUser = async (request = req, response = res) => {
 	response.status(201).json({ id: savedUser._id });
 };
 
-const login = (request, response = res) => {
-	response.status(200).json({ message: 'succeed!' });
+/*
+/login
+*/
+const login = async (request, response) => {
+	const body = request.body;
+
+	// TODO: see what happends with wrong email or username
+
+	const user = await User.findOne({ email: body.email });
+
+	const passwordCorrect =
+		user === null ? false : await bcrypt.compare(body.password, user.password);
+
+	if (!(user && passwordCorrect)) {
+		return response.status(401).json({ error: 'invalid email or password' });
+	}
+
+	// TODO: add token to the response
+	// const userForToken = {
+	// 	username: user.username,
+	// 	id: user._id
+	// };
+
+	// const token = jwt.sign(userForToken, process.env.SECRET, {
+	// 	expiresIn: 60 * 60 * 24 * 7 * 4
+	// });
+	const token = new Date().getTime();
+
+	response
+		.status(200)
+		.send({ token, username: user.username, name: user.name });
 };
 
 const renew = (request, response = res) => {

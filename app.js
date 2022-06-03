@@ -4,6 +4,7 @@ require('express-async-errors');
 const app = express();
 const cors = require('cors');
 const authRouter = require('./routes/users');
+const loginRouter = require('./routes/login');
 const middleware = require('./utils/middlewares');
 const logger = require('./utils/loggers');
 const mongoose = require('mongoose');
@@ -28,6 +29,7 @@ app.use(cors());
 app.use(express.json());
 app.use(middleware.requestLogger);
 
+app.use('/api/v1/login', loginRouter);
 app.use('/api/v1/users', authRouter);
 
 // last two middlewares are for error handling
