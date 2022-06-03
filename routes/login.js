@@ -1,7 +1,7 @@
 const loginRouter = require('express').Router();
 const { check } = require('express-validator');
 const { validatorHandler } = require('../utils/middlewares');
-const { login } = require('../controllers/users');
+const { login } = require('../controllers/login');
 
 /*
  ** GET /api/v1/login

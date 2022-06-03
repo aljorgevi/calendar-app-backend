@@ -1,8 +1,5 @@
 const bcrypt = require('bcrypt');
-const { response: res, request: req } = require('express');
-const { validationResult } = require('express-validator');
 const User = require('../models/user');
-const logger = require('../utils/loggers');
 const { generateToken } = require('../utils/helpers');
 
 /*
@@ -41,40 +38,17 @@ const createUser = async (request, response) => {
 };
 
 /*
-/login
+/renew-token
 */
-const login = async (request, response) => {
-	const body = request.body;
-
-	// TODO: see what happends with wrong email or username
-
-	const user = await User.findOne({ email: body.email });
-
-	const passwordCorrect =
-		user === null
-			? false
-			: await bcrypt.compare(body.password, user.passwordHash);
-
-	if (!(user && passwordCorrect)) {
-		return response.status(401).json({ error: 'invalid email or password' });
-	}
-
+const renewToken = (request, response) => {
 	const userForToken = {
-		username: user.username,
-		id: user._id
+		username: request.username,
+		id: request.id
 	};
 
 	const token = generateToken(userForToken);
 
-	response
-		.status(200)
-		.send({ token, username: user.username, name: user.name });
+	response.status(200).json({ token });
 };
 
-const renew = (request, response = res) => {
-	logger.info('[authRouter], RENEW');
-
-	response.status(200).json({ message: 'renew!' });
-};
-
-module.exports = { createUser, login, renew };
+module.exports = { createUser, renewToken };

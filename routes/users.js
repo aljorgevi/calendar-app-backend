@@ -1,7 +1,7 @@
 const authRouter = require('express').Router();
 const { check } = require('express-validator');
-const { validatorHandler } = require('../utils/middlewares');
-const { createUser, login, renew } = require('../controllers/users');
+const { validatorHandler, validateJWT } = require('../utils/middlewares');
+const { createUser, renewToken } = require('../controllers/users');
 
 // TODO:  CREATE A PATH TO FIND USER BY ID
 
@@ -19,6 +19,6 @@ authRouter.post(
 	createUser
 );
 
-authRouter.post('/renew', renew);
+authRouter.post('/renew-token', validateJWT, renewToken);
 
 module.exports = authRouter;

@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const logger = require('./loggers');
 
@@ -52,9 +53,32 @@ const validatorHandler = (request, response, next) => {
 	next();
 };
 
+const validateJWT = (request, response, next) => {
+	const token = request.header('x-auth-token');
+
+	if (!token) {
+		return response.status(401).json({
+			error: 'Access denied. No token provided.'
+		});
+	}
+
+	try {
+		const decoded = jwt.verify(token, process.env.SECRET);
+		request.username = decoded.username;
+		request.id = decoded.id;
+	} catch (error) {
+		return response.status(401).json({
+			error: 'Invalid token.'
+		});
+	}
+
+	next();
+};
+
 module.exports = {
 	requestLogger,
 	unknownEndpoint,
 	errorHandler,
-	validatorHandler
+	validatorHandler,
+	validateJWT
 };
