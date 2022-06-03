@@ -9,6 +9,7 @@ const _ = require('lodash');
 // 	return d.toISOString().substring(0, 10) === date;
 // };
 
+// was having trouble with this one
 const isDate = (value, { request, location, path }) => {
 	if (!value) {
 		return false;

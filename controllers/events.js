@@ -10,40 +10,18 @@ const { getTokenFrom } = require('../utils/helpers');
  */
 const createEvent = async (request, response) => {
 	const body = request.body;
-	const token = getTokenFrom(request);
-	const decodedToken = jwt.verify(token, process.env.SECRET);
+	const { _userId } = request;
 
-	if (!token || !decodedToken.id) {
-		return response.status(401).json({ error: 'token missing or invalid' });
-	}
-
-	const user = await User.findById(decodedToken.id);
-
-	let date = Date.now();
-	let timeNow = moment(new Date(date)).format('YYYY-MM-DD');
+	const user = await User.findById(_userId);
 
 	const event = new Event({
 		...body,
-		creationDate: timeNow,
-		asOfTime: timeNow,
 		user: user._id
 	});
 
-	const returnedObject = await event.save();
+	const savedEvent = await event.save();
 	// user.events = user.notes.concat(savedNote._id);
 	// await user.save();
-
-	// TODO: instead of user, change to creator or createdBy
-	const savedEvent = {
-		id: returnedObject.id,
-		user: returnedObject.user,
-		creationDate: returnedObject.creationDate,
-		asOfTime: returnedObject.asOfTime,
-		title: returnedObject.title,
-		notes: returnedObject.notes,
-		start: returnedObject.start,
-		end: returnedObject.end
-	};
 
 	response.json(savedEvent);
 };
@@ -53,8 +31,35 @@ const getEvents = async (request, response, next) => {
 	return response.json(events);
 };
 
-const updateEvent = (request, response, next) => {
-	response.send('update events');
+const updateEvent = async (request, response, next) => {
+	console.log('update event');
+	const body = request.body;
+	const eventId = request.params.id;
+	const { _userId } = request;
+
+	const event = await Event.findByIdAndUpdate(eventId);
+	if (!event) {
+		return response.status(404).json({
+			error: 'event not found'
+		});
+	}
+
+	if (event.user.toString() !== _userId) {
+		return response.status(401).json({
+			error: 'not authorized'
+		});
+	}
+
+	const updatedEvent = {
+		...body,
+		user: _userId
+	};
+
+	const savedEvent = await Event.findByIdAndUpdate(eventId, updatedEvent, {
+		new: true
+	});
+
+	response.json(savedEvent);
 };
 
 const deleteEvent = (request, response, next) => {

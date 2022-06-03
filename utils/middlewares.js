@@ -68,7 +68,7 @@ const validateJWT = (request, response, next) => {
 	try {
 		const decoded = jwt.verify(token, process.env.SECRET);
 		request.username = decoded.username;
-		request.id = decoded.id;
+		request._userId = decoded.id;
 	} catch (error) {
 		return response.status(401).json({
 			error: 'Invalid token.'

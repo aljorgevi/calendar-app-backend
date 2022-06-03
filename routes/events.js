@@ -13,6 +13,8 @@ const {
 if (process.env.NODE_ENV === 'production') {
 	eventsRouter.use(validateJWT);
 }
+// this just for dev purposes
+eventsRouter.use(validateJWT);
 
 eventsRouter.get('/', getEvents);
 
@@ -27,7 +29,16 @@ eventsRouter.post(
 	createEvent
 );
 
-eventsRouter.put('/:id', updateEvent);
+eventsRouter.put(
+	'/:id',
+	[
+		check('title', 'title is required').notEmpty().isString(),
+		check('start', 'start date is required and/or valid').isDate(),
+		check('end', 'end date is required and/or valid').isDate(),
+		validatorHandler
+	],
+	updateEvent
+);
 
 eventsRouter.delete('/:id', deleteEvent);
 
