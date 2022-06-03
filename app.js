@@ -3,7 +3,7 @@ const express = require('express');
 require('express-async-errors');
 const app = express();
 const cors = require('cors');
-const authRouter = require('./routes/users');
+const usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
 const middleware = require('./utils/middlewares');
 const logger = require('./utils/loggers');
@@ -30,7 +30,7 @@ app.use(express.json());
 app.use(middleware.requestLogger);
 
 app.use('/api/v1/login', loginRouter);
-app.use('/api/v1/users', authRouter);
+app.use('/api/v1/users', usersRouter);
 
 // last two middlewares are for error handling
 app.use(middleware.unknownEndpoint);

@@ -1,4 +1,4 @@
-const authRouter = require('express').Router();
+const usersRouter = require('express').Router();
 const { check } = require('express-validator');
 const { validatorHandler, validateJWT } = require('../utils/middlewares');
 const { createUser, renewToken } = require('../controllers/users');
@@ -8,7 +8,7 @@ const { createUser, renewToken } = require('../controllers/users');
 /*
  ** GET /api/v1/users/new-user
  */
-authRouter.post(
+usersRouter.post(
 	'/new-user',
 	[
 		check('username', 'username is required').not().isEmpty(),
@@ -19,6 +19,16 @@ authRouter.post(
 	createUser
 );
 
-authRouter.post('/renew-token', validateJWT, renewToken);
+usersRouter.post('/renew-token', validateJWT, renewToken);
 
-module.exports = authRouter;
+usersRouter.post('/test-validation', (request, response) => {
+	// check for bearer token in authorization
+	const { authorization } = request.headers;
+	console.log({ authorization });
+
+	response.status(200).json({
+		message: 'test validation'
+	});
+});
+
+module.exports = usersRouter;
