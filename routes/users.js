@@ -21,14 +21,18 @@ usersRouter.post(
 
 usersRouter.post('/renew-token', validateJWT, renewToken);
 
-usersRouter.post('/test-validation', (request, response) => {
-	// check for bearer token in authorization
-	const { authorization } = request.headers;
-	console.log({ authorization });
-
-	response.status(200).json({
-		message: 'test validation'
+if (process.env.NODE_ENV === 'production') {
+	usersRouter.get('/test', validateJWT, (request, response) => {
+		response.status(200).json({
+			message: 'success'
+		});
 	});
-});
+} else {
+	usersRouter.get('/test', (request, response) => {
+		response.status(200).json({
+			message: 'success'
+		});
+	});
+}
 
 module.exports = usersRouter;

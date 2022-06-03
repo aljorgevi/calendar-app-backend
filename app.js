@@ -30,8 +30,8 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(middleware.requestLogger);
 
-app.use('/api/v1/login', loginRouter);
 app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/login', loginRouter);
 app.use('/api/v1/events', eventsRouter);
 
 // last two middlewares are for error handling
