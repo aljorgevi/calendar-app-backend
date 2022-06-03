@@ -21,6 +21,7 @@ usersRouter.post(
 
 usersRouter.post('/renew-token', validateJWT, renewToken);
 
+/* TESTING prod env */
 if (process.env.NODE_ENV === 'production') {
 	usersRouter.get('/test', validateJWT, (request, response) => {
 		response.status(200).json({
