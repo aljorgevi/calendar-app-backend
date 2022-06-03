@@ -3,6 +3,8 @@ const { check } = require('express-validator');
 const { validatorHandler } = require('../utils/middlewares');
 const { createUser, login, renew } = require('../controllers/users');
 
+// TODO:  CREATE A PATH TO FIND USER BY ID
+
 /*
  ** GET /api/v1/auth/login
  */

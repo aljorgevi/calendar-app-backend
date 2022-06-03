@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const { response: res, request: req } = require('express');
 const { validationResult } = require('express-validator');
 const User = require('../models/user');
@@ -24,10 +25,13 @@ const createUser = async (request = req, response = res) => {
 		});
 	}
 
+	const saltRounds = 10;
+	const passwordHash = await bcrypt.hash(body.password, saltRounds);
+
 	const user = new User({
 		username: body.username,
 		email: body.email,
-		password: body.password
+		password: passwordHash
 	});
 
 	const savedUser = await user.save();
