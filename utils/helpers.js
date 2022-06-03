@@ -27,7 +27,7 @@ const generateJWT = (uid, name) => {
 const token = await generateJWT(user.id, user.name);
 */
 
-function getToken(request) {
+function getTokenFrom(request) {
 	if (
 		request.headers.authorization &&
 		request.headers.authorization.split(' ')[0] === 'Bearer'
@@ -37,4 +37,4 @@ function getToken(request) {
 	return null;
 }
 
-module.exports = { generateToken, getToken };
+module.exports = { generateToken, getTokenFrom };

@@ -6,26 +6,33 @@ const eventSchema = new mongoose.Schema({
 	notes: String,
 	start: Date,
 	end: Date,
+	creationDate: {
+		type: Date,
+		required: true
+	},
+	asOfTime: {
+		type: Date,
+		required: true
+	},
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
+		ref: 'User',
+		required: true
 	}
 });
 
 // This makes error handling much easier,
 // since you will get a Mongoose validation error when you attempt to violate a unique constraint, rather than an E11000 error from MongoDB.
 // we handle this in middlewares, errorHandler method.
-userSchema.plugin(uniqueValidator);
+eventSchema.plugin(uniqueValidator);
 
-// userSchema.set('toJSON', {
-// 	transform: (document, returnedObject) => {
-// 		returnedObject.id = returnedObject._id.toString();
-// 		delete returnedObject._id;
-// 		delete returnedObject.__v;
-// 		// the passwordHash should not be revealed
-// 		delete returnedObject.passwordHash;
-// 	}
-// });
+eventSchema.set('toJSON', {
+	transform: (document, returnedObject) => {
+		returnedObject.id = returnedObject._id.toString();
+		delete returnedObject._id;
+		delete returnedObject.__v;
+	}
+});
 
 const Event = mongoose.model('Event', eventSchema);
 

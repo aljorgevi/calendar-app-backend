@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const logger = require('./loggers');
-const { getToken } = require('./helpers');
+const { getTokenFrom } = require('./helpers');
 
 const requestLogger = (request, response, next) => {
 	logger.info('Method:', request.method);
@@ -57,7 +57,7 @@ const validatorHandler = (request, response, next) => {
 const validateJWT = (request, response, next) => {
 	/* if token want to be passed in the header */
 	// 	const token = request.header('x-auth-token');
-	const token = getToken(request);
+	const token = getTokenFrom(request);
 
 	if (!token) {
 		return response.status(401).json({

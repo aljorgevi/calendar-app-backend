@@ -1,4 +1,5 @@
 const moment = require('moment');
+const _ = require('lodash');
 
 // const isDate = date => {
 // 	const regEx = /^\d{4}-\d{2}-\d{2}$/;
@@ -23,4 +24,6 @@ const isDate = (value, { request, location, path }) => {
 	return false;
 };
 
-module.exports = { isDate };
+const isEmpty = value => !_.isEmpty(value);
+
+module.exports = { isDate, isEmpty };
