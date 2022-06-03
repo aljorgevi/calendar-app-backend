@@ -3,6 +3,7 @@ const { response: res, request: req } = require('express');
 const { validationResult } = require('express-validator');
 const User = require('../models/user');
 const logger = require('../utils/loggers');
+const { generateToken } = require('../utils/helpers');
 
 /*
 /new-user
@@ -31,12 +32,12 @@ const createUser = async (request, response) => {
 	const user = new User({
 		username: body.username,
 		email: body.email,
-		password: passwordHash
+		passwordHash
 	});
 
 	const savedUser = await user.save();
 
-	response.status(201).json({ id: savedUser._id });
+	response.status(201).json(savedUser);
 };
 
 /*
@@ -50,22 +51,20 @@ const login = async (request, response) => {
 	const user = await User.findOne({ email: body.email });
 
 	const passwordCorrect =
-		user === null ? false : await bcrypt.compare(body.password, user.password);
+		user === null
+			? false
+			: await bcrypt.compare(body.password, user.passwordHash);
 
 	if (!(user && passwordCorrect)) {
 		return response.status(401).json({ error: 'invalid email or password' });
 	}
 
-	// TODO: add token to the response
-	// const userForToken = {
-	// 	username: user.username,
-	// 	id: user._id
-	// };
+	const userForToken = {
+		username: user.username,
+		id: user._id
+	};
 
-	// const token = jwt.sign(userForToken, process.env.SECRET, {
-	// 	expiresIn: 60 * 60 * 24 * 7 * 4
-	// });
-	const token = new Date().getTime();
+	const token = generateToken(userForToken);
 
 	response
 		.status(200)
