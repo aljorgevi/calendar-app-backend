@@ -1,8 +1,5 @@
-const jwt = require('jsonwebtoken');
-const moment = require('moment');
 const Event = require('../models/event');
 const User = require('../models/user');
-const { getTokenFrom } = require('../utils/helpers');
 
 /*
  ** This create a event, getting the ids of the user from the jwt token.
