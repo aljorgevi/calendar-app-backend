@@ -32,7 +32,6 @@ const getEvents = async (request, response, next) => {
 };
 
 const updateEvent = async (request, response, next) => {
-	console.log('update event');
 	const body = request.body;
 	const eventId = request.params.id;
 	const { _userId } = request;
@@ -62,8 +61,25 @@ const updateEvent = async (request, response, next) => {
 	response.json(savedEvent);
 };
 
-const deleteEvent = (request, response, next) => {
-	response.send('delete events');
+const deleteEvent = async (request, response, next) => {
+	const eventId = request.params.id;
+	const { _userId } = request;
+
+	const event = await Event.findByIdAndUpdate(eventId);
+	if (!event) {
+		return response.status(404).json({
+			error: 'event not found'
+		});
+	}
+
+	if (event.user.toString() !== _userId) {
+		return response.status(401).json({
+			error: 'not authorized'
+		});
+	}
+
+	await Event.findByIdAndRemove(request.params.id);
+  response.status(204).end();
 };
 
 module.exports = { createEvent, getEvents, updateEvent, deleteEvent };
