@@ -24,6 +24,8 @@ mongoose
 		logger.error('error connecting to MongoDB:', error.message);
 	});
 
+	logger.info('CONFIRM: connected to MongoDB');
+
 app.use(cors());
 app.use(express.static('public'));
 // read & parse the body of the request
