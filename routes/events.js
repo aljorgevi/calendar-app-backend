@@ -10,7 +10,7 @@ const {
 	deleteEvent
 } = require('../controllers/events');
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV == 'production') {
 	eventsRouter.use(validateJWT);
 }
 // this just for dev purposes
