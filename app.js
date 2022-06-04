@@ -11,7 +11,6 @@ const logger = require('./utils/loggers');
 const mongoose = require('mongoose');
 
 logger.info('connecting to', config.MONGODB_URI);
-logger.info('your current env is: ', process.env.NODE_ENV);
 
 mongoose
 	.connect(config.MONGODB_URI, {
@@ -20,6 +19,7 @@ mongoose
 	})
 	.then(() => {
 		logger.info('connected to MongoDB');
+		logger.info('your current env is: ', process.env.NODE_ENV);
 	})
 	.catch(error => {
 		logger.error('error connecting to MongoDB:', error.message);

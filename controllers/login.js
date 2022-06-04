@@ -9,6 +9,7 @@ const login = async (request, response) => {
 	const body = request.body;
 
 	const user = await User.findOne({ email: body.email });
+	console.log({ user });
 
 	const passwordCorrect =
 		user === null
@@ -28,7 +29,7 @@ const login = async (request, response) => {
 
 	response
 		.status(200)
-		.send({ token, username: user.username, name: user.name });
+		.send({ id: user._id.toString(), token, username: user.username });
 };
 
 module.exports = { login };
