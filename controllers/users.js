@@ -46,9 +46,9 @@ const renewToken = (request, response) => {
 		id: request.id
 	};
 
-	const token = generateToken(userForToken);
+	const { token, expiresIn } = generateToken(userForToken);
 
-	response.status(200).json({ token });
+	response.status(200).json({ token, expiresIn });
 };
 
 module.exports = { createUser, renewToken };

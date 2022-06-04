@@ -5,7 +5,7 @@ const generateToken = userForToken => {
 		expiresIn: 60 * 60 * 24 * 7 * 4
 	});
 
-	return token;
+	return { token, expiresIn: 60 * 60 * 24 * 7 * 4 };
 };
 
 /*

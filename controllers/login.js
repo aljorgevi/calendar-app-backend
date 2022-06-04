@@ -24,11 +24,16 @@ const login = async (request, response) => {
 		id: user._id
 	};
 
-	const token = generateToken(userForToken);
+	const { token, expiresIn } = generateToken(userForToken);
 
 	response
 		.status(200)
-		.send({ id: user._id.toString(), token, username: user.username });
+		.send({
+			id: user._id.toString(),
+			token,
+			expiresIn,
+			username: user.username
+		});
 };
 
 module.exports = { login };
