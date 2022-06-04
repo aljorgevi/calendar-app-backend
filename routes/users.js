@@ -12,8 +12,10 @@ usersRouter.post(
 	'/new-user',
 	[
 		check('username', 'username is required').not().isEmpty(),
-		check('email', 'email is required').isEmail(),
-		check('password', 'password is required').isLength({ min: 6 }),
+		check('email', 'please enter a valid email').isEmail(),
+		check('password', 'password is required, at least 6 characteres').isLength({
+			min: 6
+		}),
 		validatorHandler
 	],
 	createUser
