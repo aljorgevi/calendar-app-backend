@@ -9,14 +9,13 @@ const login = async (request, response) => {
 	const body = request.body;
 
 	const user = await User.findOne({ email: body.email });
-	console.log({ user });
 
 	const passwordCorrect =
 		user === null
 			? false
 			: await bcrypt.compare(body.password, user.passwordHash);
 
-	if (!(user && passwordCorrect)) {
+	if (!user || !passwordCorrect) {
 		return response.status(401).json({ error: 'invalid email or password' });
 	}
 

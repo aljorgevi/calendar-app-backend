@@ -10,8 +10,8 @@ const { login } = require('../controllers/login');
 loginRouter.post(
 	'/',
 	[
-		check('email', 'email is required').isEmail(),
-		check('password', 'password is required').isLength({ min: 6 }),
+		check('email', 'email not valid').isEmail(),
+		check('password', 'password at least 6 length').isLength({ min: 6 }),
 		validatorHandler
 	],
 	login

@@ -48,8 +48,11 @@ const validatorHandler = (request, response, next) => {
 	if (!errors.isEmpty()) {
 		logger.info('[error] - validatorHandler: ', errors.mapped());
 		logger.info('---');
+		const arr = errors.array();
+		const errMessage = arr[0].msg;
+
 		return response.status(400).json({
-			error: errors.mapped()
+			error: errMessage
 		});
 	}
 
