@@ -11,6 +11,7 @@ const logger = require('./utils/loggers');
 const mongoose = require('mongoose');
 
 logger.info('connecting to', config.MONGODB_URI);
+logger.info('your current env is: ', process.env.NODE_ENV);
 
 mongoose
 	.connect(config.MONGODB_URI, {
