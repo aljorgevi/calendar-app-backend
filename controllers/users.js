@@ -41,14 +41,18 @@ const createUser = async (request, response) => {
 /renew-token
 */
 const renewToken = (request, response) => {
-	const userForToken = {
-		username: request.username,
-		id: request.id
-	};
+	const { _userId, username } = request;
+	const userForToken = { username, id: _userId };
+	console.log({ _userId });
 
 	const { token, expiresIn } = generateToken(userForToken);
 
-	response.status(200).json({ token, expiresIn });
+	response.status(200).json({
+		id: _userId,
+		username,
+		token,
+		expiresIn
+	});
 };
 
 module.exports = { createUser, renewToken };
