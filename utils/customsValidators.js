@@ -10,14 +10,15 @@ const _ = require('lodash');
 // };
 
 // was having trouble with this one
-const isDate = (value, { request, location, path }) => {
+const isValidDate = (value, { request, location, path }) => {
+	console.log('value:', value);
 	if (!value) {
 		return false;
 	}
 
 	const date = moment(value).format('YYYY-MM-DD');
 	console.log({ date });
-	if (date.isValid()) {
+	if (moment(date).isValid()) {
 		console.log('is valid');
 		return true;
 	}
@@ -27,4 +28,4 @@ const isDate = (value, { request, location, path }) => {
 
 const isEmpty = value => !_.isEmpty(value);
 
-module.exports = { isDate, isEmpty };
+module.exports = { isValidDate, isEmpty };

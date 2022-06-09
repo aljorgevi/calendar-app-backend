@@ -10,6 +10,10 @@ const createEvent = async (request, response) => {
 	const { _userId } = request;
 
 	const user = await User.findById(_userId);
+	const userToSend = {
+		id: user._id,
+		username: user.username
+	};
 
 	const event = new Event({
 		...body,
@@ -17,6 +21,7 @@ const createEvent = async (request, response) => {
 	});
 
 	const savedEvent = await event.save();
+
 	// user.events = user.notes.concat(savedNote._id);
 	// await user.save();
 
@@ -76,7 +81,7 @@ const deleteEvent = async (request, response, next) => {
 	}
 
 	await Event.findByIdAndRemove(request.params.id);
-  response.status(204).end();
+	response.status(204).end();
 };
 
 module.exports = { createEvent, getEvents, updateEvent, deleteEvent };

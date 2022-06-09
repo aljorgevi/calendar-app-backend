@@ -1,6 +1,6 @@
 const eventsRouter = require('express').Router();
 const { check } = require('express-validator');
-const { isDate, isEmpty } = require('../utils/customsValidators');
+const { isValidDate, isEmpty } = require('../utils/customsValidators');
 const { validateJWT, validatorHandler } = require('../utils/middlewares');
 
 const {
@@ -22,8 +22,8 @@ eventsRouter.post(
 	'/',
 	[
 		check('title', 'title is required').notEmpty().isString(),
-		check('start', 'start date is required and/or valid').isDate(),
-		check('end', 'end date is required and/or valid').isDate(),
+		check('start', 'start date is required and/or valid').custom(isValidDate),
+		check('end', 'end date is required and/or valid').custom(isValidDate),
 		validatorHandler
 	],
 	createEvent
@@ -33,8 +33,8 @@ eventsRouter.put(
 	'/:id',
 	[
 		check('title', 'title is required').notEmpty().isString(),
-		check('start', 'start date is required and/or valid').isDate(),
-		check('end', 'end date is required and/or valid').isDate(),
+		check('start', 'start date is required and/or valid').custom(isValidDate),
+		check('end', 'end date is required and/or valid').custom(isValidDate),
 		validatorHandler
 	],
 	updateEvent
