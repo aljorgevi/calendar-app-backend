@@ -1,16 +1,11 @@
 const eventsRouter = require('express').Router();
 const { check } = require('express-validator');
-const { isValidDate, isEmpty } = require('../utils/customsValidators');
+const { isValidDate } = require('../utils/customsValidators');
 const { validateJWT, validatorHandler } = require('../utils/middlewares');
 
-const {
-	createEvent,
-	getEvents,
-	updateEvent,
-	deleteEvent
-} = require('../controllers/events');
+const { createEvent, getEvents, updateEvent, deleteEvent } = require('../controllers/events');
 
-if (process.env.NODE_ENV == 'production') {
+if (process.env.NODE_ENV === 'production') {
 	eventsRouter.use(validateJWT);
 }
 // this just for dev purposes

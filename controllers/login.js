@@ -11,9 +11,7 @@ const login = async (request, response) => {
 	const user = await User.findOne({ email: body.email });
 
 	const passwordCorrect =
-		user === null
-			? false
-			: await bcrypt.compare(body.password, user.passwordHash);
+		user === null ? false : await bcrypt.compare(body.password, user.passwordHash);
 
 	if (!user || !passwordCorrect) {
 		return response.status(401).json({ error: 'invalid email or password' });
@@ -26,14 +24,12 @@ const login = async (request, response) => {
 
 	const { token, expiresIn } = generateToken(userForToken);
 
-	response
-		.status(200)
-		.send({
-			id: user._id.toString(),
-			token,
-			expiresIn,
-			username: user.username
-		});
+	response.status(200).send({
+		id: user._id.toString(),
+		token,
+		expiresIn,
+		username: user.username
+	});
 };
 
 module.exports = { login };

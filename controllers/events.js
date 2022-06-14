@@ -10,10 +10,6 @@ const createEvent = async (request, response) => {
 	const { _userId } = request;
 
 	const user = await User.findById(_userId);
-	const userToSend = {
-		id: user._id,
-		username: user.username
-	};
 
 	const event = new Event({
 		...body,
