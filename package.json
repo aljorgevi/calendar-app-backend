@@ -7,7 +7,8 @@
 		"start": "NODE_ENV=production node index.js",
 		"dev": "NODE_ENV=development nodemon index.js",
 		"test": "NODE_ENV=test jest --verbose --runInBand",
-		"start:test": "NODE_ENV=test node index.js"
+		"start:test": "NODE_ENV=test node index.js",
+		"eslint": "eslint './**/*.{js, jsx, ts, tsx}'"
 	},
 	"keywords": [],
 	"author": "Jorge Mena <jormencar@yahoo.com>",
