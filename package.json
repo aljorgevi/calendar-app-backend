@@ -29,6 +29,7 @@
 	},
 	"devDependencies": {
 		"eslint-config-prettier": "^8.5.0",
+		"jest": "^28.1.1",
 		"nodemon": "2.0.16"
 	},
 	"eslintConfig": {
