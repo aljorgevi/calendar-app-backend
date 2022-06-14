@@ -1,4 +1,5 @@
-/* eslint-disable no-undef */
+/* global test */
+
 test('hello world', () => {});
 
 // test('this should be fail', () => {
