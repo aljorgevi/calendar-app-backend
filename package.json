@@ -23,9 +23,17 @@
 		"lodash": "^4.17.21",
 		"moment": "^2.29.3",
 		"mongoose": "6.3.5",
-		"mongoose-unique-validator": "^3.1.0"
+		"mongoose-unique-validator": "^3.1.0",
+		"standard": "^17.0.0"
 	},
 	"devDependencies": {
+		"eslint-config-prettier": "^8.5.0",
 		"nodemon": "2.0.16"
+	},
+	"eslintConfig": {
+		"extends": [
+			"./node_modules/standard/eslintrc.json",
+			"prettier"
+		]
 	}
 }
