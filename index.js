@@ -10,4 +10,6 @@ server.listen(config.PORT, () => {
 	logger.info(`visit http://localhost:${config.PORT}`);
 });
 
+module.exports = server;
+
 //
