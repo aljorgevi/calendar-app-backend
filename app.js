@@ -9,6 +9,7 @@ const eventsRouter = require('./routes/events');
 const middleware = require('./utils/middlewares');
 const logger = require('./utils/loggers');
 const mongoose = require('mongoose');
+const { version } = require('./package.json');
 
 logger.info('connecting to', config.MONGODB_URI);
 
@@ -30,6 +31,14 @@ app.use(express.static('public'));
 // read & parse the body of the request
 app.use(express.json());
 app.use(middleware.requestLogger);
+
+app.get('/health', (req, res) => {
+	res.send('ok');
+});
+
+app.get('/version', (req, res) => {
+	res.send(version);
+});
 
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/login', loginRouter);
