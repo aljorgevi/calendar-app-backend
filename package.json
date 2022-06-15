@@ -37,5 +37,8 @@
 			"./node_modules/standard/eslintrc.json",
 			"prettier"
 		]
+	},
+	"jest": {
+		"testEnvironment": "node"
 	}
 }
