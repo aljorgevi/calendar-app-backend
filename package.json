@@ -28,6 +28,7 @@
 		"standard": "^17.0.0"
 	},
 	"devDependencies": {
+		"@types/jest": "^28.1.1",
 		"eslint-config-prettier": "8.5.0",
 		"jest": "28.1.1",
 		"nodemon": "2.0.16"
@@ -36,7 +37,10 @@
 		"extends": [
 			"./node_modules/standard/eslintrc.json",
 			"prettier"
-		]
+		],
+		"env": {
+			"jest": true
+		}
 	},
 	"jest": {
 		"testEnvironment": "node"
