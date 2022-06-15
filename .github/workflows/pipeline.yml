@@ -48,7 +48,7 @@ jobs:
       #     name: build
       #     path: buid
 
-  tests:
+  test:
     needs: [lint, build]
     runs-on: ubuntu-18.04
     steps:
@@ -92,7 +92,7 @@ jobs:
 
   deploy:
     # needs: [tests, e2e]
-    needs: [tests]
+    needs: [test]
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v3
